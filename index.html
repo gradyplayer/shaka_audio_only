@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shaka Player: Audio-Only DASH Demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/shaka-player@5.3.3/dist/shaka-player.compiled.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Shaka Player: audio-only playback of a DASH manifest</h1>
+
+    <div class="player">
+      <video id="video" controls playsinline></video>
+      <div id="audioOnlyOverlay" class="overlay">
+        <span>Audio only. No video segments are being downloaded.</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="toggleVideo" type="button" disabled>Turn video on</button>
+      <span id="status">Loading…</span>
+    </div>
+
+    <table class="info">
+      <tbody>
+        <tr><th>Mode</th><td id="infoMode">-</td></tr>
+        <tr><th>Audio stream</th><td id="infoAudio">-</td></tr>
+        <tr><th>Video stream</th><td id="infoVideo">-</td></tr>
+        <tr><th>Current bandwidth</th><td id="infoBandwidth">-</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">
+      Manifest: <code id="manifestUrl"></code>
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
