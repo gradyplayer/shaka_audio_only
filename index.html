@@ -12,20 +12,29 @@
     <h1>Shaka Player: audio-only playback of a DASH manifest</h1>
 
     <div class="player">
-      <video id="video" controls playsinline></video>
-      <div id="audioOnlyOverlay" class="overlay">
+      <video id="video" playsinline></video>
+      <div id="audioOnlyOverlay" class="overlay" hidden>
         <span>Audio only. No video segments are being downloaded.</span>
       </div>
     </div>
+    <!-- Plays the audio-only presentation while video is off. -->
+    <audio id="audio"></audio>
 
     <div class="controls">
-      <button id="toggleVideo" type="button" disabled>Turn video on</button>
+      <button id="playPause" type="button" disabled>Play</button>
+      <input id="seek" type="range" min="0" max="0" step="0.1" value="0" disabled>
+      <span id="time">0:00 / 0:00</span>
+    </div>
+
+    <div class="controls">
+      <button id="toggleVideo" type="button" disabled>Turn video off</button>
       <span id="status">Loading…</span>
     </div>
 
     <table class="info">
       <tbody>
         <tr><th>Mode</th><td id="infoMode">-</td></tr>
+        <tr><th>Playing element</th><td id="infoElement">-</td></tr>
         <tr><th>Audio stream</th><td id="infoAudio">-</td></tr>
         <tr><th>Video stream</th><td id="infoVideo">-</td></tr>
         <tr><th>Current bandwidth</th><td id="infoBandwidth">-</td></tr>

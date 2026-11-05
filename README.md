@@ -18,13 +18,20 @@ Then open http://localhost:8000.
 
 ## How it works
 
-- Audio-only mode sets `manifest.disableVideo: true`. Shaka drops the video
+- Audio-only mode uses `manifest.disableVideo: true`. Shaka drops the video
   AdaptationSets while parsing, so only the ~34 kbps audio stream is
   downloaded instead of up to ~2.3 Mbps of video.
-- The toggle flips `manifest.disableVideo` and calls
-  `player.load(url, currentTime)`. A reload is required because Shaka applies
-  the setting at parse time and MSE can't add a video SourceBuffer once
-  playback has started. Expect a short pause in audio at the switch.
+- Playback starts with video on.
+- Shaka can't drop video from a presentation that is already playing, so
+  the page uses two players: one on the `<video>` element (audio + video)
+  and one on a hidden `<audio>` element (audio only, `disableVideo: true`).
+- To switch, the idle player is loaded 4 s ahead of the current position and
+  buffered while paused. When the playing element reaches that point, the
+  idle one starts, the two cross-fade for 150 ms, and the old player is
+  unloaded so it stops downloading. Turning video back on uses the same
+  steps in reverse.
+- The page has its own play/pause and seek controls, because the native
+  `<video>` controls can't drive the `<audio>` element.
 - The manifest is requested with `?rmt=wv`, and Widevine licenses come from
   `https://content.downlynk.com/wv`, set through
   `drm.servers['com.widevine.alpha']`.

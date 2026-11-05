@@ -229,9 +229,11 @@ async function toggleVideo() {
     await switchTo(to);
     setStatus(to === slots.video ? 'Video on' : 'Video off, audio only');
   } catch (error) {
-    // Keep playing on the original element.
-    to.el.pause();
-    to.player.unload();
+    // If the switch didn't complete, keep playing on the original element.
+    if (active !== to) {
+      to.el.pause();
+      to.player.unload().catch(() => {});
+    }
     onError(error);
   } finally {
     switching = false;
